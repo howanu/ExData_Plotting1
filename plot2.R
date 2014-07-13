@@ -6,16 +6,24 @@
 # https://github.com/howanu/ExData_Plotting1
 
 ##
-## Download, unzip, read, and filter the data
+## Download, unzip, read, and filter the data if necessary
 ##
 
-source("readdata.R")
-obs <- readdata()
+if (!exists("obs")) {
+  source("readdata.R")
+  obs <- readdata()
+}
 
 ##
 ## Create the plot
 ##
-png("plot2.png")
+
+isSubPlot = length(dev.list() > 0)
+
+if (!isSubPlot) {
+  png("plot2.png")
+}
+
 plot(obs$Global_active_power, 
      type="l",
      ylab = "Global Active Power (kilowatts)",
@@ -23,4 +31,8 @@ plot(obs$Global_active_power,
      xaxt='n'
      )
 axis(side=1, at=c(1,1440,2880), labels=c("Thu","Fri","Sat"))
-dev.off()
+
+if (!isSubPlot) {
+  dev.off()
+}
+

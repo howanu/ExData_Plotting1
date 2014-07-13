@@ -6,16 +6,23 @@
 # https://github.com/howanu/ExData_Plotting1
 
 ##
-## Download, unzip, read, and filter the data
+## Download, unzip, read, and filter the data if necessary
 ##
 
-source("readdata.R")
-obs <- readdata()
+if (!exists("obs")) {
+  source("readdata.R")
+  obs <- readdata()
+}
 
 ##
 ## Create the plot
 ##
-png("plot1.png")
+isSubPlot = length(dev.list() > 0)
+
+if (!isSubPlot) {
+  png("plot1.png")
+}
+
 hist(obs$Global_active_power, 
      col = "red",
      main = "Global Active Power",
@@ -23,4 +30,6 @@ hist(obs$Global_active_power,
      ylab = "Frequency"
      )
 
-dev.off()
+if (!isSubPlot) {
+  dev.off()
+}

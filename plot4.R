@@ -15,41 +15,40 @@ if (!exists("obs")) {
 }
 
 ##
-## Create the plot
+## Create the plots
 ##
 
-isSubPlot = length(dev.list() > 0)
+png("plot4.png")
 
-if (!isSubPlot) {
-  png("plot3.png")
-}
+par(mfcol = c(2, 2))
+source("plot2.R")
+source("plot3.R")
 
-plot(obs$Sub_metering_1, 
+##
+## Plot the top right Voltage plot
+##
+
+plot(obs$Voltage, 
      type="l",
-     ylab = "Energy sub metering",
-     xlab = "",
+     ylab = "Voltage",
+     xlab = "datetime",
      xaxt='n'
      )
 axis(side=1, at=c(1,1440,2880), labels=c("Thu","Fri","Sat"))
-lines(obs$Sub_metering_2, col="red")
-lines(obs$Sub_metering_3, col="blue")
 
-#
-# The multiple plot does notuse a border around the legend
-#
-if (isSubPlot) {
-  bty_var <- "n"
-} else {
-  bty_var <- "o"
-}
+##
+## Plot the bottom right Global Reactive Power plot
+##
 
-legend("topright", 
-       lty=1,
-       col = c("black","red","blue"), 
-      legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"),
-      bty=bty_var)
+plot(obs$Global_reactive_power, 
+     type="l",
+     ylab = "Global_reactive_power", # Note we need underscores rather than spaces
+     xlab = "datetime",
+     xaxt='n'
+)
+axis(side=1, at=c(1,1440,2880), labels=c("Thu","Fri","Sat"))
 
-if (!isSubPlot) {
-  dev.off()
-}
+
+dev.off()
+
 
