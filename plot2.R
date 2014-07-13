@@ -24,9 +24,15 @@ if (!isSubPlot) {
   png("plot2.png")
 }
 
+if (isSubPlot) {
+  ylab_var <- "Global Active Power"
+} else {
+  ylab_var <- "Global Active Power (kilowatts)"
+}
+
 plot(obs$Global_active_power, 
      type="l",
-     ylab = "Global Active Power (kilowatts)",
+     ylab = ylab_var,
      xlab = "",
      xaxt='n'
      )
